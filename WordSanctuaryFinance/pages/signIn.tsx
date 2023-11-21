@@ -1,37 +1,56 @@
-// src/components/SignInScreen.tsx
-import React from 'react';
+// SignInScreen.tsx
+import React, { useState } from 'react';
 import { View, StyleSheet, ImageBackground, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
-import { TextInput, Button, Title, Text } from 'react-native-paper';
+import { Title, Text } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
+import TextInput from '../components/textInput';
+import Button from '../components/Buttons';
 
 const SignInScreen: React.FC = () => {
+  const navigation = useNavigation();
+
+  const navigateToSignUp = () => {
+    navigation.navigate('SignUp');
+  };
+
+//   const handleSignIn = () => {
+//     navigation.navigate('SignUp');
+//   };
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSignIn = () => {
+    console.log('Sign In:', { username, password });
+    navigation.navigate('Dashboard');
+    // Implement your sign-in logic here
+    
+  };
+
   return (
-    <ImageBackground
-      source={require('../assets/back.jpg')} // Replace with your image path
-      style={styles.backgroundImage}
-    >
+    <>
       <KeyboardAvoidingView
-        behavior="padding"
-        style={styles.container}
+  behavior="padding"
+  style={styles.container}
+  keyboardVerticalOffset={-500}
       >
-        <View style={styles.content}>
+        <View style={[styles.titleContainer, { height: '40%' }]}>
           <Title style={styles.title}>Welcome Back</Title>
+        </View>
+        <View style={styles.formContainer}>
           <TextInput
             label="Username"
-            mode="outlined"
-            style={styles.input}
-            // Add onChangeText and value props for handling input changes
+            value={username}
+            onChangeText={setUsername}
           />
           <TextInput
             label="Password"
             secureTextEntry
-            mode="outlined"
-            style={styles.input}
-            // Add onChangeText and value props for handling input changes
+            value={password}
+            onChangeText={setPassword}
           />
-          <Button mode="contained" style={styles.button} onPress={() => console.log('Sign In')}>
-            Sign In
-          </Button>
-          <TouchableOpacity onPress={() => console.log('Navigate to Create Account')}>
+          <Button label="Sign In" onPress={handleSignIn} />
+          <TouchableOpacity onPress={navigateToSignUp}>
             <Text style={styles.linkText}>Create Account</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => console.log('Navigate to Forgot Password')}>
@@ -39,43 +58,40 @@ const SignInScreen: React.FC = () => {
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
-    </ImageBackground>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
-    resizeMode: 'cover', // or 'stretch'
+    resizeMode: 'cover',
   },
   container: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.4)', // Add an overlay for better readability
+    backgroundColor: 'rgba(0,0,0,0)',
   },
-  content: {
+  titleContainer: {
+    backgroundColor: 'black',
+    padding: 120,
+    alignItems: 'center',
+    borderBottomLeftRadius: 80,
+    borderBottomRightRadius: 80,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+    borderWidth: 2,
+  },
+  formContainer: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    color: 'white', // Set the text color based on your design
-  },
-  input: {
-    width: '100%',
-    marginBottom: 16,
-    backgroundColor: 'rgba(255,255,255,0.8)', 
-  },
-  button: {
-    width: '100%',
-    marginTop: 10,
-    backgroundColor: '#000',  
-  },
   linkText: {
-    color: 'white',
+    color: 'black',
     marginTop: 10,
     textDecorationLine: 'underline',
   },

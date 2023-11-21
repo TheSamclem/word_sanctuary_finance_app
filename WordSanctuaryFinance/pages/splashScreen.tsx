@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/FontAwesome'; 
 
 const SplashScreen: React.FC = () => {
   const navigation = useNavigation();
